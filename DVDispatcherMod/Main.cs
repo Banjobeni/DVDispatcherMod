@@ -1,6 +1,4 @@
-﻿using Harmony12;
-using System.Reflection;
-using DVDispatcherMod.DispatcherHintManagers;
+﻿using DVDispatcherMod.DispatcherHintManagers;
 using DVDispatcherMod.DispatcherHintShowers;
 using DVDispatcherMod.PlayerInteractionManagers;
 using UnityModManagerNet;
@@ -22,8 +20,6 @@ namespace DVDispatcherMod {
         static bool Load(UnityModManager.ModEntry modEntry) {
 #pragma warning restore IDE0051 // Remove unused private members
             ModEntry = modEntry;
-            var harmony = HarmonyInstance.Create(modEntry.Info.Id);
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
             ModEntry.OnToggle = OnToggle;
             ModEntry.OnUpdate = OnUpdate;
 
