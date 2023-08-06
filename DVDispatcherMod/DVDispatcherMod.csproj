@@ -144,6 +144,10 @@
     <Compile Include="PlayerInteractionManagers\VRPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\VRPlayerInteractionManagerFactory.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
