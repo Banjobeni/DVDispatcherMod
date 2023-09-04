@@ -48,7 +48,7 @@ namespace DVDispatcherMod {
             } else if (task.InstanceTaskType == TaskType.Sequential) {
                 AppendIndented(indent, "Sequential", stringBuilder);
             } else if (task.InstanceTaskType == TaskType.Transport) {
-                AppendIndented(indent, $"Transport {FormatNumberOfCars(taskData.cars.Count)} cars from {FormatTrack(taskData.startTrack, nearestYardID)} to {FormatTrack(taskData.destinationTrack, nearestYardID)}", stringBuilder);
+                AppendIndented(indent, $"Transport {FormatNumberOfCars(taskData.cars.Count)} from {FormatTrack(taskData.startTrack, nearestYardID)} to {FormatTrack(taskData.destinationTrack, nearestYardID)}", stringBuilder);
             } else if (task.InstanceTaskType == TaskType.Warehouse) {
                 if (taskData.warehouseTaskType == WarehouseTaskType.Loading) {
                     AppendIndented(indent, $"Load {FormatNumberOfCars(taskData.cars.Count)} at {FormatTrack(taskData.destinationTrack, nearestYardID)}", stringBuilder);
