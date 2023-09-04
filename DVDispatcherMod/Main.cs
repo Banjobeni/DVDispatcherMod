@@ -1,4 +1,5 @@
-﻿using DVDispatcherMod.DispatcherHintManagers;
+﻿using System;
+using DVDispatcherMod.DispatcherHintManagers;
 using DVDispatcherMod.DispatcherHintShowers;
 using DVDispatcherMod.PlayerInteractionManagers;
 using UnityModManagerNet;
@@ -35,34 +36,38 @@ namespace DVDispatcherMod {
         }
 
         static void OnUpdate(UnityModManager.ModEntry mod, float delta) {
-            if (IsModEnabledAndWorldReadyForInteraction()) {
-                _timer += delta;
+            try {
+                if (IsModEnabledAndWorldReadyForInteraction()) {
+                    _timer += delta;
 
-                if (_dispatcherHintManager == null) {
-                    if (_timer > SETUP_INTERVAL) {
-                        _timer %= SETUP_INTERVAL;
+                    if (_dispatcherHintManager == null) {
+                        if (_timer > SETUP_INTERVAL) {
+                            _timer %= SETUP_INTERVAL;
 
-                        _dispatcherHintManager = TryCreateDispatcherHintManager();
-                        if (_dispatcherHintManager != null) {
-                            mod.Logger.Log("Dispatcher hint manager created.");
+                            _dispatcherHintManager = TryCreateDispatcherHintManager();
+                            if (_dispatcherHintManager != null) {
+                                mod.Logger.Log("Dispatcher hint manager created.");
+                            }
                         }
                     }
-                }
 
-                if (_dispatcherHintManager != null) {
-                    if (_timer > POINTER_INTERVAL) {
-                        _counter++;
-                        _timer %= POINTER_INTERVAL;
+                    if (_dispatcherHintManager != null) {
+                        if (_timer > POINTER_INTERVAL) {
+                            _counter++;
+                            _timer %= POINTER_INTERVAL;
 
-                        _dispatcherHintManager.SetCounter(_counter);
+                            _dispatcherHintManager.SetCounter(_counter);
+                        }
+                    }
+                } else {
+                    if (_dispatcherHintManager != null) {
+                        _dispatcherHintManager.Dispose();
+                        _dispatcherHintManager = null;
+                        ModEntry.Logger.Log("Disposed dispatcher hint manager.");
                     }
                 }
-            } else {
-                if (_dispatcherHintManager != null) {
-                    _dispatcherHintManager.Dispose();
-                    _dispatcherHintManager = null;
-                    ModEntry.Logger.Log("Disposed dispatcher hint manager.");
-                }
+            } catch (Exception e) {
+                ModEntry.Logger.Log(e.ToString());
             }
         }
 
