@@ -2,6 +2,10 @@
     "Releases": [
         {
             "Id": "DVDispatcherMod",
+            "Version": "1.0.2"
+        },
+        {
+            "Id": "DVDispatcherMod",
             "Version": "1.0.3"
         }
     ]
