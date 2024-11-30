@@ -83,10 +83,23 @@ namespace DVDispatcherMod {
             if (track.ID.yardId == nearestYardID) {
                 return track.ID.TrackPartOnly;
             } else {
-                if (_yardID2Color.TryGetValue(track.ID.yardId, out var color)) {
-                    return GetColoredString(color, track.ID.FullDisplayID);
+                if (Main.Settings.fullTrackIDs)
+                {
+                    if (_yardID2Color.TryGetValue(track.ID.yardId, out var color))
+                    {
+                        return GetColoredString(color, track.ID.FullID);
+                    }
+                    return track.ID.FullID;
                 }
-                return track.ID.FullDisplayID;
+                else
+                {
+                    if (_yardID2Color.TryGetValue(track.ID.yardId, out var color))
+                    {
+                        return GetColoredString(color, track.ID.FullDisplayID);
+                    }
+                    return track.ID.FullDisplayID;
+                }
+
             }
         }
 

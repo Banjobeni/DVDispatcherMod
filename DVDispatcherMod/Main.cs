@@ -16,21 +16,34 @@ namespace DVDispatcherMod {
         private static DispatcherHintManager _dispatcherHintManager;
 
         public static UnityModManager.ModEntry ModEntry { get; private set; }
-
+        public static Settings Settings;
 #pragma warning disable IDE0051 // Remove unused private members
         static bool Load(UnityModManager.ModEntry modEntry) {
 #pragma warning restore IDE0051 // Remove unused private members
             ModEntry = modEntry;
             ModEntry.OnToggle = OnToggle;
             ModEntry.OnUpdate = OnUpdate;
-
+            Settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
+            modEntry.OnGUI = OnGUI;
+            modEntry.OnSaveGUI = OnSaveGUI;
             return true;
         }
+        static void OnGUI(UnityModManager.ModEntry modEntry)
+        {
+            Settings.Draw(modEntry);
+        }
 
+        static void OnSaveGUI(UnityModManager.ModEntry modEntry)
+        {
+            Settings.Save(modEntry);
+        }
         static bool OnToggle(UnityModManager.ModEntry _, bool isEnabled) {
             _isEnabled = isEnabled;
-
-            ModEntry.Logger.Log(string.Format("isEnabled toggled to {0}.", isEnabled));
+            if (Settings.enableLogging)
+            {
+                ModEntry.Logger.Log(string.Format("isEnabled toggled to {0}.", isEnabled));
+            }
+            
 
             return true;
         }
@@ -45,7 +58,8 @@ namespace DVDispatcherMod {
                             _timer %= SETUP_INTERVAL;
 
                             _dispatcherHintManager = TryCreateDispatcherHintManager();
-                            if (_dispatcherHintManager != null) {
+                            if (_dispatcherHintManager != null && Settings.enableLogging)
+                            {
                                 mod.Logger.Log("Dispatcher hint manager created.");
                             }
                         }
@@ -63,7 +77,11 @@ namespace DVDispatcherMod {
                     if (_dispatcherHintManager != null) {
                         _dispatcherHintManager.Dispose();
                         _dispatcherHintManager = null;
-                        ModEntry.Logger.Log("Disposed dispatcher hint manager.");
+                        if (Settings.enableLogging)
+                        {
+                            ModEntry.Logger.Log("Disposed dispatcher hint manager.");
+                        }
+                        
                     }
                 }
             } catch (Exception e) {

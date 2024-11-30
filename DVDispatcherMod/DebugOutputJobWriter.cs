@@ -42,7 +42,11 @@ namespace DVDispatcherMod {
 
         private static void DebugLogIndented(int indent, string name, object value = null) {
             var content = value != null ? (name + ": " + value) : name;
-            Main.ModEntry.Logger.Log(string.Join("", Enumerable.Repeat("    ", indent)) + content);
+            if (Main.Settings.enableLogging)
+            {
+                Main.ModEntry.Logger.Log(string.Join("", Enumerable.Repeat("    ", indent)) + content);
+            }
+            
         }
     }
 }

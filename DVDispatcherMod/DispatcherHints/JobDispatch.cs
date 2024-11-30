@@ -118,8 +118,9 @@ namespace DVDispatcherMod.DispatcherHints {
             if (preferredCarsTrackID != null) {
                 return preferredCarsTrackID;
             }
-
-            return trainSet.cars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Where(id => !id.IsGeneric()).Select(id => id.TrackPartOnly).WhereNotNull().FirstOrDefault();
+            return Main.Settings.fullTrackIDs
+                ? trainSet.cars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Select(id => id.FullID).WhereNotNull().FirstOrDefault()
+                : trainSet.cars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Where(id => !id.IsGeneric()).Select(id => id.TrackPartOnly).WhereNotNull().FirstOrDefault();
         }
 
         private static bool IsAnyLocoInConsist(Trainset trainset) {
