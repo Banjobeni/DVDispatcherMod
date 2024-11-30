@@ -114,12 +114,24 @@ namespace DVDispatcherMod.DispatcherHints {
         }
 
         private static string GetNamedTrackIDFromPreferredCarsOrTrainSet(List<TrainCar> preferredCars, Trainset trainSet) {
-            var preferredCarsTrackID = preferredCars.Select(c => c.logicCar.CurrentTrack?.ID).Where(id => id != null && !id.IsGeneric()).Select(id => id.TrackPartOnly).WhereNotNull().FirstOrDefault();
+            var preferredCarsTrackID = preferredCars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Select(GetTrackIDDisplayStringOrNull).WhereNotNull().FirstOrDefault();
             if (preferredCarsTrackID != null) {
                 return preferredCarsTrackID;
             }
 
-            return trainSet.cars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Where(id => !id.IsGeneric()).Select(id => id.TrackPartOnly).WhereNotNull().FirstOrDefault();
+            return trainSet.cars.Select(c => c.logicCar.CurrentTrack?.ID).WhereNotNull().Select(GetTrackIDDisplayStringOrNull).WhereNotNull().FirstOrDefault();
+        }
+
+        private static string GetTrackIDDisplayStringOrNull(TrackID trackID) {
+            if (Main.Settings.ShowFullTrackIDs) {
+                return trackID.FullID;
+            }
+
+            if (trackID.IsGeneric()) {
+                return null;
+            }
+
+            return trackID.TrackPartOnly;
         }
 
         private static bool IsAnyLocoInConsist(Trainset trainset) {

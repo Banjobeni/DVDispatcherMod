@@ -81,13 +81,15 @@ namespace DVDispatcherMod {
 
         private string FormatTrack(Track track, string nearestYardID) {
             if (track.ID.yardId == nearestYardID) {
-                return track.ID.TrackPartOnly;
-            } else {
-                if (_yardID2Color.TryGetValue(track.ID.yardId, out var color)) {
-                    return GetColoredString(color, track.ID.FullDisplayID);
-                }
-                return track.ID.FullDisplayID;
+                return Main.Settings.ShowFullTrackIDs ? track.ID.FullID : track.ID.TrackPartOnly;
             }
+
+            var trackDisplayID = Main.Settings.ShowFullTrackIDs ? track.ID.FullID : track.ID.FullDisplayID;
+            if (_yardID2Color.TryGetValue(track.ID.yardId, out var color)) {
+                return GetColoredString(color, trackDisplayID);
+            }
+
+            return trackDisplayID;
         }
 
         private static string FormatNumberOfCars(int count) {

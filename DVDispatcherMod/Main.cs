@@ -5,7 +5,7 @@ using DVDispatcherMod.PlayerInteractionManagers;
 using UnityModManagerNet;
 
 namespace DVDispatcherMod {
-    static class Main {
+    internal static class Main {
         private const float SETUP_INTERVAL = 1;
         private const float POINTER_INTERVAL = 1; // Time between forced dispatcher updates.
 
@@ -16,26 +16,35 @@ namespace DVDispatcherMod {
         private static DispatcherHintManager _dispatcherHintManager;
 
         public static UnityModManager.ModEntry ModEntry { get; private set; }
+        public static Settings Settings { get; private set; }
 
-#pragma warning disable IDE0051 // Remove unused private members
-        static bool Load(UnityModManager.ModEntry modEntry) {
-#pragma warning restore IDE0051 // Remove unused private members
+        private static bool Load(UnityModManager.ModEntry modEntry) {
             ModEntry = modEntry;
             ModEntry.OnToggle = OnToggle;
             ModEntry.OnUpdate = OnUpdate;
-
+            Settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
+            modEntry.OnGUI = OnGUI;
+            modEntry.OnSaveGUI = OnSaveGUI;
             return true;
         }
 
-        static bool OnToggle(UnityModManager.ModEntry _, bool isEnabled) {
+        private static void OnGUI(UnityModManager.ModEntry modEntry) {
+            Settings.Draw(modEntry);
+        }
+
+        private static void OnSaveGUI(UnityModManager.ModEntry modEntry) {
+            Settings.Save(modEntry);
+        }
+
+        private static bool OnToggle(UnityModManager.ModEntry _, bool isEnabled) {
             _isEnabled = isEnabled;
 
-            ModEntry.Logger.Log(string.Format("isEnabled toggled to {0}.", isEnabled));
+            ModEntry.Logger.Log($"isEnabled toggled to {isEnabled}.");
 
             return true;
         }
 
-        static void OnUpdate(UnityModManager.ModEntry mod, float delta) {
+        private static void OnUpdate(UnityModManager.ModEntry mod, float delta) {
             try {
                 if (IsModEnabledAndWorldReadyForInteraction()) {
                     _timer += delta;

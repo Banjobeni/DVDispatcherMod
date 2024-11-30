@@ -132,6 +132,7 @@
     <Compile Include="PlayerInteractionManagers\IPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\NonVRPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\NonVRPlayerInteractionManagerFactory.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="TaskOverviewGenerator.cs" />
     <Compile Include="DispatcherHintShowers\IDispatcherHintShower.cs" />
     <Compile Include="DispatcherHints\JobDispatch.cs" />
