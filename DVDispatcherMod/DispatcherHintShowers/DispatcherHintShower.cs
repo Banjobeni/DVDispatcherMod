@@ -33,7 +33,7 @@ namespace DVDispatcherMod.DispatcherHintShowers {
         }
 
         private Transform GetAttentionTransform(Vector3? attentionPoint) {
-            if (attentionPoint == null) {
+            if (attentionPoint == null || Main.Settings.ShowAttentionLine == false) {
                 return null;
             } else {
                 _attentionLineTransform.position = attentionPoint.Value;

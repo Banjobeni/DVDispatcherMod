@@ -5,6 +5,9 @@ namespace DVDispatcherMod {
         [Draw("Show full TrackIDs")]
         public bool ShowFullTrackIDs = false;
 
+        [Draw("Show targetting line")]
+        public bool ShowAttentionLine = true;
+
         [Draw("Enable debug logging of job structure")]
         public bool EnableDebugLoggingOfJobStructure = false;
 
