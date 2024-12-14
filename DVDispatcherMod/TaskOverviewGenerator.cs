@@ -19,7 +19,7 @@ namespace DVDispatcherMod
             _yardID2Color = StationController.allStations.ToDictionary(s => s.stationInfo.YardID, s => s.stationInfo.StationColor);
         }
 
-        public void DebugTaskOutput(Task task, ref int i, ref int carsNum, HashSet<string> cars, HashSet<string> warehouseLoadTypeCars)
+        /*public void DebugTaskOutput(Task task, ref int i, ref int carsNum, HashSet<string> cars, HashSet<string> warehouseLoadTypeCars)
         {
             //Debug.Log("task index: " + i);
             i++;
@@ -81,7 +81,7 @@ namespace DVDispatcherMod
             {
                 //Debug.Log("no cars");
             }
-        }
+        }*/
 
         public void RecursivelyGetAllTasksData(Task task, ref int i, ref List<TaskData> JobTasks, ref List<int> indentList, int currentLevel = 0)
         {
@@ -128,6 +128,34 @@ namespace DVDispatcherMod
                             previousTask.warehouseTaskType == WarehouseTaskType.Loading &&
                             currentTask.destinationTrack == previousTask.destinationTrack)
                         {
+                            //Debug.Log("Conditions met, tasks will merge");
+                            mergedCars = previousTask.cars.Union(currentTask.cars).ToList();
+                            TaskData mergedTaskData = new TaskData(
+                                currentTask.type,
+                                currentTask.state,
+                                currentTask.taskStartTime,
+                                currentTask.taskFinishTime,
+                                mergedCars,
+                                currentTask.startTrack,
+                                currentTask.destinationTrack,
+                                currentTask.warehouseTaskType,
+                                currentTask.cargoTypePerCar,
+                                currentTask.totalCargoAmount,
+                                null,
+                                currentTask.couplingRequiredAndNotDone,
+                                currentTask.anyHandbrakeRequiredAndNotDone
+                            );
+                            //Debug.Log($"Merged tasks of {previousTask.cars.Count} and {currentTask.cars.Count} to a new task of {mergedTaskData.cars.Count} cars.");
+
+                            JobTasks.RemoveAt(index - 1);
+                            JobTasks[index - 1] = mergedTaskData;
+                            i--;
+                        }
+                        else if (currentTask.warehouseTaskType == WarehouseTaskType.Unloading &&
+                            previousTask.warehouseTaskType == WarehouseTaskType.Unloading &&
+                            currentTask.destinationTrack == previousTask.destinationTrack)
+                        {
+
                             //Debug.Log("Conditions met, tasks will merge");
                             mergedCars = previousTask.cars.Union(currentTask.cars).ToList();
                             TaskData mergedTaskData = new TaskData(
