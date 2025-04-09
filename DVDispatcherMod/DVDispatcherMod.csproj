@@ -10,6 +10,7 @@
     <RootNamespace>DVDispatcherMod</RootNamespace>
     <AssemblyName>DVDispatcherMod</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+	<DVInstallPath>$([System.Environment]::GetEnvironmentVariable('ProgramFiles(x86)'))\Steam\steamapps\common\Derail Valley</DVInstallPath>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -33,55 +34,55 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Common">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Common.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Interaction">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Inventory">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Scenarios.CRUD">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Simulation">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Simulation.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Simulation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.ThingTypes">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.UI">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.UI.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.UIFramework">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.UserManagement">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.Utils">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DV.WeatherSystem">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -92,53 +93,53 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Unity.InputSystem">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\Unity.InputSystem.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityModManager">
-      <HintPath>..\..\..\..\Desktop\hry\Derail Valley Simulator\DerailValley_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

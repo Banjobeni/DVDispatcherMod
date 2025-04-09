@@ -27,8 +27,8 @@ namespace DVDispatcherMod.DispatcherHintShowers {
 
             if (dispatcherHintOrNull != null) {
                 var transform = GetAttentionTransform(dispatcherHintOrNull.AttentionPoint);
-
-                _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: false);
+                bool clearExisting = Main.Settings.BoxesClear;
+                _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: clearExisting, duration: 60);
             }
         }
 

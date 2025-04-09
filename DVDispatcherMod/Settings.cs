@@ -11,6 +11,9 @@ namespace DVDispatcherMod {
         [Draw("Enable debug logging of job structure")]
         public bool EnableDebugLoggingOfJobStructure = false;
 
+        [Draw("Clear existing messageboxes when displaying new ones - WARNING: Interfears with other mods that use messageboxes!")]
+        public bool BoxesClear = false;
+
         public override void Save(UnityModManager.ModEntry entry) {
             Save(this, entry);
         }
