@@ -128,18 +128,73 @@ namespace DVDispatcherMod
             return output;
         }
 
-        public StationController GetCurrentStation()
+        public static StationController StationFromTrack(Track track)
         {
-            return StationController.allStations.OrderBy(s => ((StationJobGenerationRange)StationControllerStationRangeField.GetValue(s)).PlayerSqrDistanceFromStationCenter).FirstOrDefault();
+            var searchedTracks = new HashSet<Track>();
+            if (track == null) return null;
+            return FindStationRecursive(track, 0, searchedTracks);
+        }
+
+        private static StationController FindStationRecursive(Track track, int depth, HashSet<Track> searchedTracks)
+        {
+            if (track == null || searchedTracks.Contains(track)) return null;
+            searchedTracks.Add(track);
+            var yardId = track.ID?.yardId;
+            if (yardId == null) return null;
+            var station = StationController.GetStationByYardID(yardId);
+            if (station != null) return station;
+            if (yardId == "#Y" && depth < 10)
+            {
+                var connectedTracks = GetConnectedTracks(track);
+                foreach (var connected in connectedTracks)
+                {
+                    var result = FindStationRecursive(connected, depth + 1, searchedTracks);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        private static IEnumerable<Track> GetConnectedTracks(Track track)
+        {
+            var tracks = new List<Track>();
+            if (track.InTrack != null) tracks.Add(track.InTrack);
+            if (track.OutTrack != null) tracks.Add(track.OutTrack);
+            if (track.PossibleInTracks != null) tracks.AddRange(track.PossibleInTracks);
+            if (track.PossibleOutTracks != null) tracks.AddRange(track.PossibleOutTracks);
+            return tracks;
+        }
+
+        public StationController GetCurrentStation(Job job)
+        {
+            var closestStation = StationController.allStations.OrderBy(s => ((StationJobGenerationRange)StationControllerStationRangeField.GetValue(s)).PlayerSqrDistanceFromStationCenter).FirstOrDefault();
+            if (job.State == DV.ThingTypes.JobState.Available || job.State == DV.ThingTypes.JobState.Completed)
+            {
+                return closestStation;
+            }
+            else
+            {
+                Track track;
+                StationController trainStation = null;
+                foreach (var task in RebuiltTasksList(job).Item1)
+                {
+                    if (task.type == TaskType.Transport)
+                    {
+                        track = task.cars[0].CurrentTrack;
+                        trainStation = StationFromTrack(track);
+                        break;
+                    }
+                }
+                return trainStation ?? closestStation;
+            }
         }
 
         public string GetTaskOverview(Job job)
         {
-            var currentYardID = GetCurrentStation().stationInfo.YardID;
+            var currentYardID = GetCurrentStation(job).stationInfo.YardID;
             int i = 0;
-            int indent = 0;
-            var cars = new HashSet<string>();
-            var warehouseLoadTypeCars = new HashSet<string>();
+            int indent;
             var TaskStringBuilder = new StringBuilder();
             var outputStringBuilder = new StringBuilder();
 
@@ -166,6 +221,10 @@ namespace DVDispatcherMod
                         {
                             AppendIndented(indent, "(unknown WarehouseTaskType)", TaskStringBuilder);
                         }
+                        break;
+                    case TaskType.Parallel:
+                        break;
+                    case TaskType.Sequential:
                         break;
                     default:
                         AppendIndented(indent, "(unknown TaskType)", TaskStringBuilder);
@@ -200,9 +259,9 @@ namespace DVDispatcherMod
             return ((int)(255 * colorComponent)).ToString("X2");
         }
 
-        private string FormatTrack(Track track, string nearestYardID)
+        private string FormatTrack(Track track, string currentYardID)
         {
-            if (track.ID.yardId == nearestYardID)
+            if (track.ID.yardId == currentYardID)
             {
                 return Main.Settings.ShowFullTrackIDs ? track.ID.FullID : track.ID.TrackPartOnly;
             }
