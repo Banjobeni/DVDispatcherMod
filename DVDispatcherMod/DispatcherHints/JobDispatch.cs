@@ -91,9 +91,7 @@ namespace DVDispatcherMod.DispatcherHints {
             var tasks = carRelevantTasks;
 
             var jobCars = tasks.SelectMany(t => t.GetTaskData().cars).ToList();
-
-            var cars = jobCars.Select(TryGetTrainCarFromJobCar).Where(c => c != null).ToList();
-
+            var cars = TrainCar.ExtractTrainCars(jobCars);
             var dispatchTrainSets =
                 cars.GroupBy(c => c.trainset)
                     .Select(g => new DispatchTrainSet(
@@ -103,14 +101,6 @@ namespace DVDispatcherMod.DispatcherHints {
                     ).ToList();
 
             return dispatchTrainSets;
-        }
-
-        private TrainCar TryGetTrainCarFromJobCar(Car car) {
-            if (_idGenerator.logicCarToTrainCar.TryGetValue(car, out var trainCar)) {
-                return trainCar;
-            } else {
-                return null;
-            }
         }
 
         private static string GetNamedTrackIDFromPreferredCarsOrTrainSet(List<TrainCar> preferredCars, Trainset trainSet) {
