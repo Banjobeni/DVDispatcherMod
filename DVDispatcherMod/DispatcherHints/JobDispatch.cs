@@ -105,9 +105,12 @@ namespace DVDispatcherMod.DispatcherHints {
             return dispatchTrainSets;
         }
 
-        private TrainCar TryGetTrainCarFromJobCar(Car car) {
-            if (_idGenerator.logicCarToTrainCar.TryGetValue(car, out var trainCar)) {
-                return trainCar;
+        private TrainCar TryGetTrainCarFromJobCar(Car car)
+        {
+            var trainCar = TrainCar.ExtractTrainCars(new List<Car> { car });
+            if (trainCar[0])
+            {
+                return trainCar[0];
             } else {
                 return null;
             }
