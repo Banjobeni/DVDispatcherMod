@@ -27,13 +27,13 @@ namespace DVDispatcherMod.DispatcherHintShowers {
 
             if (dispatcherHintOrNull != null) {
                 var transform = GetAttentionTransform(dispatcherHintOrNull.AttentionPoint);
-                bool clearExisting = Main.Settings.BoxesClear;
-                _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: clearExisting, duration: 60);
+
+                _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: false);
             }
         }
 
         private Transform GetAttentionTransform(Vector3? attentionPoint) {
-            if (attentionPoint == null || Main.Settings.ShowAttentionLine == false) {
+            if (attentionPoint == null) {
                 return null;
             } else {
                 _attentionLineTransform.position = attentionPoint.Value;

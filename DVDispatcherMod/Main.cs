@@ -1,10 +1,7 @@
 ﻿using System;
-using DV.UI;
-using DV.Utils;
 using DVDispatcherMod.DispatcherHintManagers;
 using DVDispatcherMod.DispatcherHintShowers;
 using DVDispatcherMod.PlayerInteractionManagers;
-using UnityEngine;
 using UnityModManagerNet;
 
 namespace DVDispatcherMod {
@@ -32,10 +29,6 @@ namespace DVDispatcherMod {
         }
 
         private static void OnGUI(UnityModManager.ModEntry modEntry) {
-            if (GUILayout.Button("Clear all messageboxes"))
-            {
-                SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance.NotificationManager.ClearAllNotifications();
-            }
             Settings.Draw(modEntry);
         }
 
