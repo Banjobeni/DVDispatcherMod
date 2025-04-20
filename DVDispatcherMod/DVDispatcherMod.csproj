@@ -33,139 +33,116 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	  <Reference Include="Assembly-CSharp">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Common">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Common.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Highlighting">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Highlighting.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Interaction">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Inventory">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Layers">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Layers.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.RailTrack">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.RailTrack.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Scenarios.CRUD">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.ThingTypes">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.TimeBasedEvents">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.TimeBasedEvents.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.UI">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UI.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.UIFramework">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.UserManagement">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Utils">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Utils.ECS">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.ECS.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.WeatherSystem, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-		  <SpecificVersion>False</SpecificVersion>
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="DV.Windows">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Windows.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="System" />
-	  <Reference Include="System.Core" />
-	  <Reference Include="System.Xml.Linq" />
-	  <Reference Include="System.Data.DataSetExtensions" />
-	  <Reference Include="Microsoft.CSharp" />
-	  <Reference Include="System.Data" />
-	  <Reference Include="System.Net.Http" />
-	  <Reference Include="System.Xml" />
-	  <Reference Include="Unity.InputSystem">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.InputSystem.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="Unity.TextMeshPro">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.CoreModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.HotReloadModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.ImageConversionModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.IMGUIModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.InputLegacyModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.PhysicsModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.TextRenderingModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.UI">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UI.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.UIElementsModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityEngine.UIModule">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
-	  <Reference Include="UnityModManager">
-		  <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
-		  <Private>False</Private>
-	  </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Common">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Highlighting">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Highlighting.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Interaction">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Inventory">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Layers">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Layers.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.RailTrack">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.RailTrack.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Scenarios.CRUD">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.ThingTypes">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.TimeBasedEvents">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.TimeBasedEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.UI">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.UIFramework">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.UserManagement">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Utils">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Utils.ECS">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.ECS.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.WeatherSystem, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Windows">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityModManager">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugOutputJobWriter.cs" />
@@ -191,6 +168,9 @@
     <None Include="Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
