@@ -10,7 +10,7 @@
     <RootNamespace>DVDispatcherMod</RootNamespace>
     <AssemblyName>DVDispatcherMod</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-	<DVInstallPath>$([System.Environment]::GetEnvironmentVariable('ProgramFiles(x86)'))\Steam\steamapps\common\Derail Valley</DVInstallPath>
+    <DVInstallPath>$([System.Environment]::GetEnvironmentVariable('ProgramFiles(x86)'))\Steam\steamapps\common\Derail Valley</DVInstallPath>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -35,54 +35,55 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.Common">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Common.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="DV.Highlighting">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Highlighting.dll</HintPath>
     </Reference>
     <Reference Include="DV.Interaction">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.Inventory">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="DV.Layers">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Layers.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.RailTrack">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.RailTrack.dll</HintPath>
     </Reference>
     <Reference Include="DV.Scenarios.CRUD">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DV.Simulation">
-      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Simulation.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.ThingTypes">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="DV.TimeBasedEvents">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.TimeBasedEvents.dll</HintPath>
     </Reference>
     <Reference Include="DV.UI">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.UIFramework">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.UserManagement">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="DV.Utils">
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
-      <Private>False</Private>
     </Reference>
-    <Reference Include="DV.WeatherSystem">
+    <Reference Include="DV.Utils.ECS">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Utils.ECS.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.WeatherSystem, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="DV.Windows">
+      <HintPath>$(DVInstallPath)\DerailValley_Data\Managed\DV.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
