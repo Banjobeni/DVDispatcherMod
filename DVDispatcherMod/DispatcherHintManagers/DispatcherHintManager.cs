@@ -51,8 +51,10 @@ namespace DVDispatcherMod.DispatcherHintManagers {
         }
 
         public void Dispose() {
-            _dispatcherHintShower.SetDispatcherHint(null);
-            _playerInteractionManager?.Dispose();
+            _dispatcherHintShower.Dispose();
+
+            _playerInteractionManager.JobOfInterestChanged -= HandleJobObInterestChanged;
+            _playerInteractionManager.Dispose();
         }
     }
 }

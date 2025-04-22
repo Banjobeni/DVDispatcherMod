@@ -80,10 +80,10 @@ namespace DVDispatcherMod.PlayerInteractionManagers {
         }
 
         public void Dispose() {
-            _grabber.GrabStarted += HandleGrabbed;
-            _grabber.GrabStopped += HandleHeldItemReleased;
-            _grabber.Raycaster.Hovered += HandleHovered;
-            _grabber.Raycaster.UnHovered += HandleUnhovered;
+            _grabber.GrabStarted -= HandleGrabbed;
+            _grabber.GrabStopped -= HandleHeldItemReleased;
+            _grabber.Raycaster.Hovered -= HandleHovered;
+            _grabber.Raycaster.UnHovered -= HandleUnhovered;
         }
     }
 }

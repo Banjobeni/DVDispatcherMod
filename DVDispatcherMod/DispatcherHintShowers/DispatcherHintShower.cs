@@ -40,5 +40,17 @@ namespace DVDispatcherMod.DispatcherHintShowers {
                 return _attentionLineTransform;
             }
         }
+
+        public void Dispose() {
+            if (_notification != null) {
+                _notificationManager.ClearNotification(_notification);
+                _notification = null;
+            }
+
+            var gameObject = _attentionLineTransform?.gameObject;
+            if (gameObject != null) {
+                Object.Destroy(gameObject);
+            }
+        }
     }
 }
