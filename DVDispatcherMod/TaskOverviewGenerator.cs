@@ -57,6 +57,15 @@ namespace DVDispatcherMod {
                 } else {
                     AppendIndented(indent, "(unknown WarehouseTaskType)", stringBuilder);
                 }
+            } else if (task.InstanceTaskType == (TaskType)42) {
+                // Passenger Jobs RuralTaskData
+                Color ruralColor = new Color32(151, 121, 210, 255);
+
+                dynamic ruralTask = taskData;
+                string stationId = ruralTask.stationId;
+                string action = (bool)ruralTask.isLoading ? "Load" : "Unload";
+
+                AppendIndented(indent, $"{action} {FormatNumberOfCars(taskData.cars.Count)} at Station {GetColoredString(ruralColor, stationId)}", stringBuilder);
             } else {
                 AppendIndented(indent, "(unknown TaskType)", stringBuilder);
             }
