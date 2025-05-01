@@ -22,18 +22,37 @@ namespace DVDispatcherMod {
             return GenerateTaskOverview(0, job.tasks.First(), nearestYardID);
         }
 
-        private string GenerateTaskOverview(int indent, Task task, string nearestYardID) {
-            if (task.InstanceTaskType == TaskType.Parallel || task.InstanceTaskType == TaskType.Sequential) {
+        private string GenerateTaskOverview(int indent, Task task, string nearestYardID) 
+        {
+            if (task.InstanceTaskType == TaskType.Parallel || task.InstanceTaskType == TaskType.Sequential) 
+            {
                 var taskData = task.GetTaskData();
-
-                //if (taskData.nestedTasks.Count == 1) {
-                //    GenerateTaskOverview(indent, taskData.nestedTasks[0], sb);
-                //} else {
-                //    AppendTaskLine(indent, task, sb);
-
-                return string.Join(Environment.NewLine, taskData.nestedTasks.Select(t => GenerateTaskOverview(indent + 1, t, nearestYardID)));
-                //}
-            } else {
+                var taskStrings = taskData.nestedTasks.Select(t => GenerateTaskOverview(indent + 1, t, nearestYardID)).ToList();
+                for (int i = 0; i < taskStrings.Count - 1; i++)
+                {
+                    var prev = taskStrings[i].TrimStart().Split(" ".ToCharArray());
+                    var curr = taskStrings[i + 1].TrimStart().Split(" ".ToCharArray());
+                    if (prev.Length >= 6 && curr.Length >= 6 && prev[1] == "Load" && curr[1] == "Load" && prev[5] == curr[5]) 
+                    {
+                        int newCount = int.Parse(prev[2]) + int.Parse(curr[2]);
+                        string indentPrefix = taskStrings[i].Substring(0, taskStrings[i].IndexOf('-'));
+                        taskStrings[i] = $"{indentPrefix}- Load {newCount} cars at {prev[5]}";
+                        taskStrings.RemoveAt(i + 1);
+                        i--; 
+                    }
+                    else if (prev.Length >= 6 && curr.Length >= 6 && prev[1] == "Unload" && curr[1] == "Unload" && prev[5] == curr[5])
+                    {
+                        int newCount = int.Parse(prev[2]) + int.Parse(curr[2]);
+                        string indentPrefix = taskStrings[i].Substring(0, taskStrings[i].IndexOf('-'));
+                        taskStrings[i] = $"{indentPrefix}- Unload {newCount} cars at {prev[5]}";
+                        taskStrings.RemoveAt(i + 1);
+                        i--;
+                    }
+                }
+                return string.Join(Environment.NewLine, taskStrings);
+            } 
+            else 
+            {
                 return GetTaskString(indent, task, nearestYardID);
             }
         }
