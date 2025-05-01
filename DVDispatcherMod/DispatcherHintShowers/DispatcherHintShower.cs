@@ -2,76 +2,54 @@
 using DV.UIFramework;
 using DV.Utils;
 using DVDispatcherMod.DispatcherHints;
-using System;
 using UnityEngine;
 
-namespace DVDispatcherMod.DispatcherHintShowers
-{
-    public class DispatcherHintShower : IDispatcherHintShower, IDisposable
-    {
+namespace DVDispatcherMod.DispatcherHintShowers {
+    public class DispatcherHintShower : IDispatcherHintShower {
         private readonly Transform _attentionLineTransform;
-        private readonly GameObject _transformGivingGameObject;
+        private readonly NotificationManager _notificationManager;
+
         private GameObject _notification;
 
-        public DispatcherHintShower()
-        {
-            _transformGivingGameObject = new GameObject("DispatcherHint_AttentionLineHolder");
-            _transformGivingGameObject.SetActive(false);
-            _attentionLineTransform = _transformGivingGameObject.transform;
-            Main.ModEntry.Logger.Log("DispatcherHintShower instance created."); 
+        public DispatcherHintShower() {
+            _notificationManager = SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance.NotificationManager;
+
+            // transforms cannot be instantiated directly, they always live within a game object. thus we create a single (unnecessary) game object and keep it's transform
+            var transformGivingGameObject = new GameObject("ObjectForTransform");
+            _attentionLineTransform = transformGivingGameObject.transform;
         }
 
-        public void SetDispatcherHint(DispatcherHint dispatcherHintOrNull)
-        {
-            var notificationManager = SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance.NotificationManager;
-            if (_notification != null)
-            {
-                GameObject notificationToClear = _notification;
-                _notification = null; 
-                notificationManager.ClearNotification(notificationToClear);
+        public void SetDispatcherHint(DispatcherHint dispatcherHintOrNull) {
+            if (_notification != null) {
+                _notificationManager.ClearNotification(_notification);
+                _notification = null;
             }
 
-            if (dispatcherHintOrNull != null)
-            {
-                if (notificationManager != null)
-                {
-                    var transform = GetAttentionTransform(dispatcherHintOrNull.AttentionPoint);
-                    bool clearExisting = Main.Settings.BoxesClear;
-                    _notification = notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: clearExisting);
-                }
+            if (dispatcherHintOrNull != null) {
+                var transform = GetAttentionTransform(dispatcherHintOrNull.AttentionPoint);
+
+                _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: false);
             }
         }
 
-        private Transform GetAttentionTransform(Vector3? attentionPoint)
-        {
-            if (attentionPoint == null || Main.Settings.ShowAttentionLine == false)
-            {
-                if (_transformGivingGameObject != null && _transformGivingGameObject.activeSelf)
-                {
-                    _transformGivingGameObject.SetActive(false);
-                }
+        private Transform GetAttentionTransform(Vector3? attentionPoint) {
+            if (attentionPoint == null || Main.Settings.ShowAttentionLine == false) {
                 return null;
-            }
-            else
-            {
-                if (_transformGivingGameObject != null)
-                {
-                    _attentionLineTransform.position = attentionPoint.Value;
-                    if (!_transformGivingGameObject.activeSelf)
-                    {
-                        _transformGivingGameObject.SetActive(true);
-                    }
-                    return _attentionLineTransform;
-                }
-                return null;
+            } else {
+                _attentionLineTransform.position = attentionPoint.Value;
+                return _attentionLineTransform;
             }
         }
-        public void Dispose()
-        {         
-            SetDispatcherHint(null);
-            if (_transformGivingGameObject != null)
-            {
-                GameObject.Destroy(_transformGivingGameObject);
+
+        public void Dispose() {
+            if (_notification != null) {
+                _notificationManager.ClearNotification(_notification);
+                _notification = null;
+            }
+
+            var gameObject = _attentionLineTransform?.gameObject;
+            if (gameObject != null) {
+                Object.Destroy(gameObject);
             }
         }
     }
