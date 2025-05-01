@@ -17,9 +17,8 @@ namespace DVDispatcherMod {
         }
 
         public string GetTaskOverview(Job job) {
-            var nearestYardID = StationController.allStations.OrderBy(s => ((StationJobGenerationRange)StationControllerStationRangeField.GetValue(s)).PlayerSqrDistanceFromStationCenter).FirstOrDefault()?.stationInfo.YardID;
-
-            return GenerateTaskOverview(0, job.tasks.First(), nearestYardID);
+            var currentYardID = GetCurrentStation(job).stationInfo.YardID;
+            return GenerateTaskOverview(0, job.tasks.First(), currentYardID);
         }
 
         private string GenerateTaskOverview(int indent, Task task, string nearestYardID) 
@@ -119,6 +118,81 @@ namespace DVDispatcherMod {
 
             return trackDisplayID;
         }
+
+        public static StationController StationFromTrack(Track track)
+        {
+            var searchedTracks = new HashSet<Track>();
+            if (track == null) return null;
+            return FindStationRecursive(track, 0, searchedTracks);
+        }
+
+        private static StationController FindStationRecursive(Track track, int depth, HashSet<Track> searchedTracks)
+        {
+            if (track == null || searchedTracks.Contains(track)) return null;
+            searchedTracks.Add(track);
+            var yardId = track.ID?.yardId;
+            if (yardId == null) return null;
+            var station = StationController.GetStationByYardID(yardId);
+            if (station != null) return station;
+            if (yardId == "#Y" && depth < 10)
+            {
+                var connectedTracks = GetConnectedTracks(track);
+                foreach (var connected in connectedTracks)
+                {
+                    var result = FindStationRecursive(connected, depth + 1, searchedTracks);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        private static IEnumerable<Track> GetConnectedTracks(Track track)
+        {
+            var tracks = new List<Track>();
+            if (track.InTrack != null) tracks.Add(track.InTrack);
+            if (track.OutTrack != null) tracks.Add(track.OutTrack);
+            if (track.PossibleInTracks != null) tracks.AddRange(track.PossibleInTracks);
+            if (track.PossibleOutTracks != null) tracks.AddRange(track.PossibleOutTracks);
+            return tracks;
+        }
+
+        public StationController GetCurrentStation(Job job)
+        {
+            var closestStation = StationController.allStations.OrderBy(s => ((StationJobGenerationRange)StationControllerStationRangeField.GetValue(s)).PlayerSqrDistanceFromStationCenter).FirstOrDefault();
+            if (job.State == DV.ThingTypes.JobState.Completed)
+            {
+                return closestStation;
+            }
+            var track = FindTrackInTasks(job.tasks);
+            if (track != null)
+            {
+                var station = StationFromTrack(track);
+                if (station != null)
+                    return station;
+            }
+            return closestStation;
+        }
+
+        public Track FindTrackInTasks(IEnumerable<Task> tasks)
+        {
+            foreach (var task in tasks)
+            {
+                var taskData = task.GetTaskData();
+                if (task.InstanceTaskType == TaskType.Transport && taskData?.cars?.Count > 0)
+                {
+                    return taskData.cars[0]?.CurrentTrack;
+                }
+                if (taskData?.nestedTasks != null)
+                {
+                    var nestedResult = FindTrackInTasks(taskData.nestedTasks);
+                    if (nestedResult != null)
+                        return nestedResult;
+                }
+            }
+            return null;
+        }
+
 
         private static string FormatNumberOfCars(int count) {
             if (count == 1) {
