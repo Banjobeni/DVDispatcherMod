@@ -88,8 +88,22 @@ namespace DVDispatcherMod.DispatcherHints {
         }
 
         private List<DispatchTrainSet> GetDispatchTrainSets(List<Task> carRelevantTasks) {
-            var tasks = carRelevantTasks;
-
+            List<Task> tasks = new List<Task>();
+            // ensure that the task has cars, if not return null - can be handeled by callers
+            foreach (var task in carRelevantTasks)
+            {
+                if (task.GetTaskData() != null)
+                {
+                    if (task.GetTaskData().cars != null)
+                    {
+                        tasks.Add(task);
+                    }
+                }
+            }
+            if (tasks.Count < 1)
+            {
+                return null;
+            }
             var jobCars = tasks.SelectMany(t => t.GetTaskData().cars).ToList();
             var cars = TrainCar.ExtractTrainCars(jobCars);
             var dispatchTrainSets =
