@@ -35,9 +35,6 @@
     <Reference Include="Assembly-CSharp">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DV.Common">
       <Private>False</Private>
     </Reference>
