@@ -88,12 +88,15 @@ namespace DVDispatcherMod.DispatcherHints {
         }
 
         private List<DispatchTrainSet> GetDispatchTrainSets(List<Task> carRelevantTasks) {
-            var tasks = carRelevantTasks;
-
-            var jobCars = tasks.SelectMany(t => t.GetTaskData().cars).ToList();
-            var cars = TrainCar.ExtractTrainCars(jobCars);
+            var trainCars =
+                carRelevantTasks.Select(t => t.GetTaskData()?.cars)
+                    .WhereNotNull() // after a game update, there may still be jobs for which no cars have been loaded, so we need this null check
+                    .SelectMany(cs => cs)
+                    .Select(TrainCarRegistry.Instance.logicCarToTrainCar.TryGetOrNull)
+                    .WhereNotNull() // we had this in the logs that there was no train car for a logic car, so we check it here
+                    .ToList();
             var dispatchTrainSets =
-                cars.GroupBy(c => c.trainset)
+                trainCars.GroupBy(c => c.trainset)
                     .Select(g => new DispatchTrainSet(
                         GetNamedTrackIDFromPreferredCarsOrTrainSet(g.ToList(), g.Key),
                         IsAnyLocoInConsist(g.Key),

@@ -107,6 +107,7 @@
     <Compile Include="DispatcherHints\AdjacentCarsCenterFinder.cs" />
     <Compile Include="DispatcherHints\AdjacentCarsGrouper.cs" />
     <Compile Include="DispatcherHints\DispatcherHint.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="PlayerInteractionManagers\IPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\NonVRPlayerInteractionManager.cs" />
