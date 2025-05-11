@@ -10,6 +10,7 @@ namespace DVDispatcherMod.DispatcherHintShowers {
         private readonly NotificationManager _notificationManager;
 
         private GameObject _notification;
+        private GameObject _locoNotification;
 
         public DispatcherHintShower() {
             _notificationManager = SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance.NotificationManager;
@@ -29,6 +30,17 @@ namespace DVDispatcherMod.DispatcherHintShowers {
                 var transform = GetAttentionTransform(dispatcherHintOrNull.AttentionPoint);
 
                 _notification = _notificationManager.ShowNotification(dispatcherHintOrNull.Text, pointAt: transform, localize: false, clearExisting: false);
+            }
+        }
+
+        public void SetLocoLocationHint(string text) {
+            if (_locoNotification != null) {
+                _notificationManager.ClearNotification(_locoNotification);
+                _locoNotification = null;
+            }
+
+            if (text != null) {
+                _locoNotification = _notificationManager.ShowNotification(text, pointAt: null, localize: false, clearExisting: false);
             }
         }
 

@@ -39,6 +39,25 @@ namespace DVDispatcherMod.DispatcherHintManagers {
         private void UpdateDispatcherHint() {
             var currentHint = GetCurrentDispatcherHint();
             _dispatcherHintShower.SetDispatcherHint(currentHint);
+
+            var loco = PlayerManager.LastLoco;
+            if (loco != null) {
+                var locoLocationHint = GetLocoLocationHint(loco);
+                _dispatcherHintShower.SetLocoLocationHint(locoLocationHint);
+            } else {
+                _dispatcherHintShower.SetLocoLocationHint(null);
+            }
+        }
+
+        private string GetLocoLocationHint(TrainCar loco) {
+            if (loco.derailed) {
+                return "derailed";
+            }
+
+            var track = loco.FrontBogie.track;
+            var position = loco.FrontBogie.traveller.Span;
+
+            return track.LogicTrack().ID.FullDisplayID + " " + position.ToString("F2");
         }
 
         private DispatcherHint GetCurrentDispatcherHint() {

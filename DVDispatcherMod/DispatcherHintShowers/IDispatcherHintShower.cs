@@ -4,5 +4,6 @@ using DVDispatcherMod.DispatcherHints;
 namespace DVDispatcherMod.DispatcherHintShowers {
     public interface IDispatcherHintShower : IDisposable {
         void SetDispatcherHint(DispatcherHint dispatcherHintOrNull);
+        void SetLocoLocationHint(string text);
     }
 }
