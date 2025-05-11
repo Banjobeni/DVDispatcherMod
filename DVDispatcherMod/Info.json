@@ -2,7 +2,7 @@
     "Id": "DVDispatcherMod",
     "DisplayName": "Derail Valley Dispatcher",
     "Author": "Banjobeni",
-    "Version": "1.0.4",
+    "Version": "1.0.5",
     "EntryMethod": "DVDispatcherMod.Main.Load",
     "HomePage": "https://www.nexusmods.com/derailvalley/mods/743/",
     "Repository": "https://raw.githubusercontent.com/Banjobeni/DVDispatcherMod/master/Repository.json"
