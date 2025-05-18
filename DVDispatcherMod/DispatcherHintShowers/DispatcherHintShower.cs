@@ -59,6 +59,11 @@ namespace DVDispatcherMod.DispatcherHintShowers {
                 _notification = null;
             }
 
+            if(_locoNotification != null) {
+                _notificationManager.ClearNotification(_locoNotification);
+                _locoNotification = null;
+            }
+
             var gameObject = _attentionLineTransform?.gameObject;
             if (gameObject != null) {
                 Object.Destroy(gameObject);

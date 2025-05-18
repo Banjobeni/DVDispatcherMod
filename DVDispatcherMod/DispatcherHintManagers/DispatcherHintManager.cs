@@ -6,6 +6,7 @@ using DVDispatcherMod.DispatcherHints;
 using DVDispatcherMod.DispatcherHintShowers;
 using DVDispatcherMod.PlayerInteractionManagers;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace DVDispatcherMod.DispatcherHintManagers {
     public sealed class DispatcherHintManager : IDisposable {
@@ -68,7 +69,7 @@ namespace DVDispatcherMod.DispatcherHintManagers {
             _playerInteractionManager.Dispose();
         }
 
-        private string GetLocoLocationHint(TrainCar loco) {
+        private static string GetLocoLocationHint(TrainCar loco) {
             if (loco.derailed) {
                 return "derailed";
             }
@@ -79,49 +80,94 @@ namespace DVDispatcherMod.DispatcherHintManagers {
 
             var basicInfo = $"{track.LogicTrack().ID.FullDisplayID} {position:F2} / {length:F2}";
 
-            var foundTrackWithDistanceOrNull = Search(track.LogicTrack(), position);
-            if (foundTrackWithDistanceOrNull != null) {
-                return $"{basicInfo}{Environment.NewLine}{foundTrackWithDistanceOrNull.Value.Track.ID.FullDisplayID} {foundTrackWithDistanceOrNull.Value.Distance}";
-            }
+            var result = Search(track.LogicTrack(), position, Main.Settings.MaxTrackDistance, (foundTrack, distance) => DoesTrackMatch(foundTrack, distance, loco.transform.position));
+            //var resultNonGeneric = Search(track.LogicTrack(), position, t => !t.Track.ID.IsGeneric());
+            //var resultNone = Search(track.LogicTrack(), position, t => false);
 
-            return basicInfo;
+            return $"{basicInfo}{Environment.NewLine}{FormatSearchResult(result, loco.transform.position)}";
         }
 
-        private (Track Track, double Distance)? Search(Track track, double position) {
-            if (!track.ID.IsGeneric()) {
-                return (track, 0);
+        private static bool DoesTrackMatch(Track track, double distance, Vector3 carPosition) {
+            if (track.ID.IsGeneric()) {
+                return false;
             }
 
-            var fakeMinHeap = new List<(TrackSide TrackSide, double Distance)>();
+            if(IsSubstationMilitaryTrack(track) && distance > Main.Settings.MaxMilitaryTrackDistance) {
+                return false;
+            }
+
+            var stationControllerDistance = (StationController.GetStationByYardID(track.ID.yardId).transform.position - carPosition).magnitude;
+            if(stationControllerDistance > Main.Settings.MaxStationCenterDistance) {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsSubstationMilitaryTrack(Track track) {
+            var yardID = track.ID.yardId;
+            if (yardID == "MB") {
+                return false;
+            }
+
+            if (yardID.EndsWith("MB")) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static string FormatSearchResult((Track TrackOrNull, double? Distance, int? steps, int totalIterations) result, Vector3 carPosition) {
+            var (trackOrNull, distance, steps, totalIterations) = result;
+
+            var stationControlDistance = (trackOrNull != null && !trackOrNull.ID.IsGeneric()) ? (StationController.GetStationByYardID(trackOrNull.ID.yardId).transform.position - carPosition).magnitude : (float?)null;
+
+            return $"{trackOrNull?.ID.FullDisplayID ?? "-"} dist:{stationControlDistance?.ToString("F2") ?? "-"} path:{distance:F2} steps:{steps?.ToString() ?? "-"} iters:{totalIterations}";
+        }
+
+        private static (Track TrackOrNull, double? Distance, int? steps, int totalIterations) Search(Track track, double trackPosition, double maxTrackDistance, Func<Track, double, bool> doesTrackMatch) {
+            if (doesTrackMatch(track, 0)) {
+                return (track, 0, 0, 0);
+            }
+
+            var fakeMinHeap = new List<(TrackSide TrackSide, double Distance, int Steps)>();
             var visited = new HashSet<TrackSide>();
 
-            fakeMinHeap.Add((new TrackSide { Track = track, IsStart = true }, position));
-            fakeMinHeap.Add((new TrackSide { Track = track, IsStart = false }, track.length - position));
+            if (trackPosition < maxTrackDistance) {
+                fakeMinHeap.Add((new TrackSide { Track = track, IsStart = true }, trackPosition, 1));
+            }
+            if (track.length - trackPosition < maxTrackDistance) {
+                fakeMinHeap.Add((new TrackSide { Track = track, IsStart = false }, track.length - trackPosition, 1));
+            }
             fakeMinHeap.Sort((a, b) => a.Distance.CompareTo(b.Distance));
 
+            int iterations = 0;
             while (fakeMinHeap.Any()) {
-                var (currentTrackSide, currentDistance) = fakeMinHeap.First();
+                iterations++;
+                var (currentTrackSide, currentDistance, currentSteps) = fakeMinHeap.First();
                 fakeMinHeap.RemoveAt(0);
                 if (!visited.Contains(currentTrackSide)) {
                     visited.Add(currentTrackSide);
 
-                    if (!currentTrackSide.Track.ID.IsGeneric()) {
-                        return (currentTrackSide.Track, currentDistance);
+                    if (doesTrackMatch(currentTrackSide.Track, currentDistance)) {
+                        return (currentTrackSide.Track, currentDistance, currentSteps, iterations);
                     }
 
                     var connectedTrackSides = GetConnectedTrackSides(currentTrackSide);
                     foreach (var connectedTrackSide in connectedTrackSides) {
-                        fakeMinHeap.Add((connectedTrackSide, currentDistance));
+                        fakeMinHeap.Add((connectedTrackSide, currentDistance, currentSteps + 1));
                     }
-                    fakeMinHeap.Add((currentTrackSide with { IsStart = !currentTrackSide.IsStart }, currentDistance + currentTrackSide.Track.length));
+                    if (currentDistance + currentTrackSide.Track.length < maxTrackDistance) {
+                        fakeMinHeap.Add((currentTrackSide with { IsStart = !currentTrackSide.IsStart }, currentDistance + currentTrackSide.Track.length, currentSteps + 1));
+                    }
                     fakeMinHeap.Sort((a, b) => a.Distance.CompareTo(b.Distance));
                 }
             }
 
-            return null;
+            return (null, null, null, iterations);
         }
 
-        private List<TrackSide> GetConnectedTrackSides(TrackSide currentTrackSide) {
+        private static List<TrackSide> GetConnectedTrackSides(TrackSide currentTrackSide) {
             var railTrack = currentTrackSide.Track.RailTrack();
             var branches = currentTrackSide.IsStart ? railTrack.GetAllInBranches() : railTrack.GetAllOutBranches();
             if (branches == null) {

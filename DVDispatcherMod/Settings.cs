@@ -11,6 +11,15 @@ namespace DVDispatcherMod {
         [Draw("Enable debug logging of job structure")]
         public bool EnableDebugLoggingOfJobStructure = false;
 
+        [Draw("NamedTrackSearch: Maximum air line distance from station center")]
+        public double MaxStationCenterDistance = 1000;
+
+        [Draw("NamedTrackSearch: Maximum track distance")]
+        public double MaxTrackDistance = 800;
+
+        [Draw("NamedTrackSearch: Maximum military track distance")]
+        public double MaxMilitaryTrackDistance = 400;
+
         public override void Save(UnityModManager.ModEntry entry) {
             Save(this, entry);
         }
