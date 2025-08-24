@@ -11,8 +11,8 @@ namespace DVDispatcherMod.DispatcherHintShowers {
 
         private GameObject _notification;
 
-        public DispatcherHintShower() {
-            _notificationManager = SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance.NotificationManager;
+        public DispatcherHintShower(NotificationManager notificationManager) {
+            _notificationManager = notificationManager;
 
             // transforms cannot be instantiated directly, they always live within a game object. thus we create a single (unnecessary) game object and keep it's transform
             var transformGivingGameObject = new GameObject("ObjectForTransform");

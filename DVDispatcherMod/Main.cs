@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DV.UI;
+using DV.Utils;
 using DVDispatcherMod.DispatcherHintManagers;
 using DVDispatcherMod.DispatcherHintShowers;
 using DVDispatcherMod.PlayerInteractionManagers;
+using System;
+using DV.UIFramework;
 using UnityModManagerNet;
 
 namespace DVDispatcherMod {
@@ -53,9 +56,13 @@ namespace DVDispatcherMod {
                         if (_timer > SETUP_INTERVAL) {
                             _timer %= SETUP_INTERVAL;
 
-                            _dispatcherHintManager = TryCreateDispatcherHintManager();
-                            if (_dispatcherHintManager != null) {
-                                mod.Logger.Log("Dispatcher hint manager created.");
+                            var notificationManager = SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance?.NotificationManager;
+
+                            if (notificationManager != null) {
+                                _dispatcherHintManager = TryCreateDispatcherHintManager(notificationManager);
+                                if (_dispatcherHintManager != null) {
+                                    mod.Logger.Log("Dispatcher hint manager created.");
+                                }
                             }
                         }
                     }
@@ -90,17 +97,20 @@ namespace DVDispatcherMod {
             if (!WorldStreamingInit.IsLoaded) {
                 return false;
             }
+            if (SingletonBehaviour<ACanvasController<CanvasController.ElementType>>.Instance?.NotificationManager == null) {
+                return false;
+            }
             return true;
         }
 
-        private static DispatcherHintManager TryCreateDispatcherHintManager() {
+        private static DispatcherHintManager TryCreateDispatcherHintManager(NotificationManager notificationManager) {
             if (VRManager.IsVREnabled()) {
                 var playerInteractionManager = VRPlayerInteractionManagerFactory.TryCreate();
                 if (playerInteractionManager == null) {
                     return null;
                 }
 
-                var dispatcherHintShower = new DispatcherHintShower();
+                var dispatcherHintShower = new DispatcherHintShower(notificationManager);
                 return new DispatcherHintManager(playerInteractionManager, dispatcherHintShower, new TaskOverviewGenerator());
             } else {
                 var playerInteractionManager = NonVRPlayerInteractionManagerFactory.TryCreate();
@@ -108,7 +118,7 @@ namespace DVDispatcherMod {
                     return null;
                 }
 
-                var dispatcherHintShower = new DispatcherHintShower();
+                var dispatcherHintShower = new DispatcherHintShower(notificationManager);
                 return new DispatcherHintManager(playerInteractionManager, dispatcherHintShower, new TaskOverviewGenerator());
             }
         }
