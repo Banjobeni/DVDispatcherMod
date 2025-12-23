@@ -98,6 +98,9 @@
     <Reference Include="UnityModManager">
       <Private>False</Private>
     </Reference>
+    <Reference Include="VRTK">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugOutputJobWriter.cs" />
