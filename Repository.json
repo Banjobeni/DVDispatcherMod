@@ -2,6 +2,11 @@
     "Releases": [
         {
             "Id": "DVDispatcherMod",
+            "Version": "1.0.6",
+            "DownloadUrl": "https://github.com/Banjobeni/DVDispatcherMod/releases/download/1.0.6/DVDispatcherMod.zip"
+        },
+        {
+            "Id": "DVDispatcherMod",
             "Version": "1.0.4"
         },
         {
