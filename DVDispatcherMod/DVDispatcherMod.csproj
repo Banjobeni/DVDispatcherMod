@@ -111,6 +111,7 @@
     <Compile Include="DispatcherHints\DispatcherHint.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\UnityObjectExtensions.cs" />
     <Compile Include="PlayerInteractionManagers\IPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\NonVRPlayerInteractionManager.cs" />
     <Compile Include="PlayerInteractionManagers\NonVRPlayerInteractionManagerFactory.cs" />

@@ -2,11 +2,12 @@
 using DV.UIFramework;
 using DV.Utils;
 using DVDispatcherMod.DispatcherHints;
+using DVDispatcherMod.Extensions;
 using UnityEngine;
 
 namespace DVDispatcherMod.DispatcherHintShowers {
     public class DispatcherHintShower : IDispatcherHintShower {
-        private readonly Transform _attentionLineTransform;
+        private readonly GameObject _attentionLineGameObject;
         private readonly NotificationManager _notificationManager;
 
         private GameObject _notification;
@@ -15,8 +16,7 @@ namespace DVDispatcherMod.DispatcherHintShowers {
             _notificationManager = notificationManager;
 
             // transforms cannot be instantiated directly, they always live within a game object. thus we create a single (unnecessary) game object and keep it's transform
-            var transformGivingGameObject = new GameObject("ObjectForTransform");
-            _attentionLineTransform = transformGivingGameObject.transform;
+            _attentionLineGameObject = new GameObject("ObjectForTransform");
         }
 
         public void SetDispatcherHint(DispatcherHint dispatcherHintOrNull) {
@@ -36,8 +36,8 @@ namespace DVDispatcherMod.DispatcherHintShowers {
             if (attentionPoint == null || Main.Settings.ShowAttentionLine == false) {
                 return null;
             } else {
-                _attentionLineTransform.position = attentionPoint.Value;
-                return _attentionLineTransform;
+                _attentionLineGameObject.transform.position = attentionPoint.Value;
+                return _attentionLineGameObject.transform;
             }
         }
 
@@ -47,10 +47,7 @@ namespace DVDispatcherMod.DispatcherHintShowers {
                 _notification = null;
             }
 
-            var gameObject = _attentionLineTransform?.gameObject;
-            if (gameObject != null) {
-                Object.Destroy(gameObject);
-            }
+            _attentionLineGameObject.DestroyIfAlive();
         }
     }
 }
