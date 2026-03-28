@@ -49,7 +49,7 @@ namespace DVDispatcherMod {
                 AppendIndented(indent, "Sequential", stringBuilder);
             } else if (task.InstanceTaskType == TaskType.Transport) {
                 AppendIndented(indent, $"Transport {FormatNumberOfCars(taskData.cars.Count)} from {FormatTrack(taskData.startTrack, nearestYardID)} to {FormatTrack(taskData.destinationTrack, nearestYardID)}", stringBuilder);
-            } else if (task.InstanceTaskType == TaskType.Warehouse) {
+            } else if ((task.InstanceTaskType == TaskType.Warehouse) || (task.InstanceTaskType == (TaskType)43)) {
                 if (taskData.warehouseTaskType == WarehouseTaskType.Loading) {
                     AppendIndented(indent, $"Load {FormatNumberOfCars(taskData.cars.Count)} at {FormatTrack(taskData.destinationTrack, nearestYardID)}", stringBuilder);
                 } else if (taskData.warehouseTaskType == WarehouseTaskType.Unloading) {
